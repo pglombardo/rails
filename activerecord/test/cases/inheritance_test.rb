@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "active_support/core_ext/string/inflections"
 require "cases/helper"
 require "models/author"
 require "models/company"
@@ -68,7 +69,7 @@ class InheritanceTest < ActiveRecord::TestCase
   end
 
   def test_compute_type_no_method_error
-    ActiveSupport::Dependencies.stub(:safe_constantize, proc { raise NoMethodError }) do
+    String.stub(:safe_constantize, proc { raise NoMethodError }) do
       assert_raises NoMethodError do
         Company.send :compute_type, "InvalidModel"
       end
@@ -85,7 +86,7 @@ class InheritanceTest < ActiveRecord::TestCase
       error = e
     end
 
-    ActiveSupport::Dependencies.stub(:safe_constantize, proc { raise e }) do
+    String.stub(:safe_constantize, proc { raise e }) do
       exception = assert_raises NameError do
         Company.send :compute_type, "InvalidModel"
       end
@@ -94,7 +95,7 @@ class InheritanceTest < ActiveRecord::TestCase
   end
 
   def test_compute_type_argument_error
-    ActiveSupport::Dependencies.stub(:safe_constantize, proc { raise ArgumentError }) do
+    String.stub(:safe_constantize, proc { raise ArgumentError }) do
       assert_raises ArgumentError do
         Company.send :compute_type, "InvalidModel"
       end
