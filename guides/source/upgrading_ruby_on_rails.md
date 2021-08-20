@@ -706,6 +706,8 @@ In addition to that, Bootsnap needs to disable the iseq cache due to a bug in th
 The new configuration point
 
 ```ruby
+# config/application.rb
+
 config.add_autoload_paths_to_load_path
 ```
 
